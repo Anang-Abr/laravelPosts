@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         //     'category_id' => '2'
         // ]);
         \App\Models\Posts::factory(15)->create();
-        \App\Models\Author::factory(4)->create();
+        \App\Models\Author::factory(5)->create();
         \App\Models\Category::factory()->create([
             'name' => 'Test Author' ,
             'slug' => 'test-author'
