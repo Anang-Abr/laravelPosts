@@ -19,11 +19,10 @@ class PostsController extends Controller
 
     public function posts()
     {
-        
         return view('blogs', [
             'header' => 'Latest Posts',
             'title' => 'Blogs',
-            'posts' => Posts::latest()->filter(request(['search']))->get()
+            'posts' => Posts::latest()->filter(request(['search', 'category', 'author']))->paginate(7)//paginate digunakan apabila kita ingin menggunakan fitur pagination
         ]);
     }
 

@@ -13,8 +13,22 @@ class Posts extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['search'] ?? false, function ($query, $search){
-            return $query->where('title', 'like', '%' . $search . '%');
+        // ketiga baris kode dibawah ini bisa dianggap berfungsi sama hanya ditulis dalam beberapa cara yang berbeda
+        $query->when(isset($filters['search']) ? $filters['search'] : false, function ($query, $search){
+            return $query->where(function($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            });
+        });
+        $query->when($filters['category'] ?? false, function ($query, $category){
+            return $query->whereHas('category',function($query) use ($category) { // penggunaan callback function membuat scope variabel  
+                $query->where('slug', 'like', '%' . $category . '%');               //$category tidak dapat diakses sehingga membutuhkan keyword 'use'
+                //whereHas berguna untuk menggabungkan tabel berdasarkan relationshipnya
+            });
+        });
+         $query->when($filters['author'] ?? false, function ($query, $author){
+            return $query->whereHas('author',fn($query) => //penggunaan arrow function membuat variabel $author dapat diakses secara langsung
+                $query->where('slug', 'like', '%' . $author . '%')
+            );
         });
     }
 

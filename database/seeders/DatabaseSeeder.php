@@ -31,10 +31,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Posts::factory(15)->create();
         \App\Models\Author::factory(5)->create();
         \App\Models\Category::factory()->create([
-            'name' => 'Test Author' ,
-            'slug' => 'test-author'
-        ]);
-        \App\Models\Category::factory()->create([
             'name' => 'Lifestyle',
             'slug' => 'lifestyle',
         ]);

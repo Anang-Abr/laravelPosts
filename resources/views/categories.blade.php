@@ -7,7 +7,7 @@
         <img src="{{ url('img/'. $category->slug . '.jpg') }}" class="card-img-top"  alt="...">
         <h2>{{ $category->name }}</h2>
         <div>
-        <a href="{{ url('category/' . $category->slug) }}" class="stretched-link"></a>
+        <a href="{{ url('blogs?category=' . $category->slug) }}" class="stretched-link"></a>
         </div>
 </div>
 @endforeach

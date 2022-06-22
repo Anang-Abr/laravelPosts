@@ -18,12 +18,10 @@
         <li class="nav-item">
           <a class="nav-link text-light {{ (request()->segment(1) == "category") ? "active" : "" }}" href="/category">Category</a>
         </li>
-         
       </ul>
-      <form class="d-flex " role="search" action='/blogs' >
-          <input class="form-control me-2" type="search" placeholder="Search" autocomplete="off" name="search" value={{ request('search') }}>
-          <button class="btn btn-outline-success" type="submit" >Search</button>
-        </form>
+      <ul class="navbar nav">
+        <a href="{{  url('login') }}" class="btn btn-outline-primary">Login</a>
+      </ul>
     </div>
   </div>
 </nav>
