@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\models\User;
 
 class LoginController extends Controller
 {
@@ -20,16 +21,26 @@ class LoginController extends Controller
             'email' => 'required|email:dns',
             'password' => 'required'
         ]);
-
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            dd('anda berhasil login');
-            // return redirect()->intended('dashboard');
+            // dd('anda berhasil login');
+            return redirect()->intended('dashboard');
         }
 
         // dd('password salah');
         return back()->with('loginError','email atau password salah');
 
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+ 
+        request()->session()->invalidate();
+    
+        request()->session()->regenerateToken();
+    
+        return redirect('/login');
     }
 }

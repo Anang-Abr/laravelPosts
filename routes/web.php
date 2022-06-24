@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Post;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardPostController;
+
 
 
 /*
@@ -30,7 +31,17 @@ Route::get('/about', function () {
         'title' => 'About'
     ]);
 });
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'store']);
+
+Route::get('/dashboard', function(){
+    return view('dashboard.index',[
+            'title' => 'Dashboard'
+        ]);
+})->middleware('auth');
+
+Route::resource('/dashboard/mypost', DashboardPostController::class)->middleware('auth'); 

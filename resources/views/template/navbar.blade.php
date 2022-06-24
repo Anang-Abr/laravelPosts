@@ -19,9 +19,25 @@
           <a class="nav-link text-light {{ (request()->segment(1) == "category") ? "active" : "" }}" href="/category">Category</a>
         </li>
       </ul>
+      @auth
+      <div class="nav-item dropdown text-light">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hello, {{ Auth::user()->name }}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{{ url('dashboard') }}">Dashboard</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <form action="/logout" method="post">
+              @csrf
+              <button type="submit" class="dropdown-item">Log Out</button>
+            </form>
+          </ul>
+        </div>
+      @else
       <ul class="navbar nav">
         <a href="{{  url('login') }}" class="btn btn-outline-primary">Login</a>
       </ul>
+      @endauth
     </div>
   </div>
 </nav>
