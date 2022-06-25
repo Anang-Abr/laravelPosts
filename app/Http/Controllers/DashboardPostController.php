@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Posts;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardPostController extends Controller
 {
@@ -14,11 +13,8 @@ class DashboardPostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        return Posts::where('author_id', '=', '1')->get();
-        return view('dashboard.myposts', [
-            'title' => 'Dashboard'
-        ]);
+    {
+        //
     }
 
     /**
@@ -56,7 +52,7 @@ class DashboardPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Posts  $post
+     * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
     public function edit(Posts $posts)

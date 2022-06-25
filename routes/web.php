@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\DashboardPostsController;
 
 
 
@@ -22,7 +22,7 @@ use App\Http\Controllers\DashboardPostController;
 Route::get('/home', [PostsController::class, 'index']);
 Route::get('/', [PostsController::class, 'index']);
 Route::get('/blogs', [PostsController::class, 'posts']);
-Route::get('/blogs/{post:slug}', [PostsController::class, 'post']);
+Route::get('/blogs/{post}', [PostsController::class, 'post']);
 // Route::get('/author/{author:slug}', [PostsController::class, 'author']); sudah tidak dipakai karena penampilan post bedasarkan author di handle dengan metode searching
 Route::get('/category', [PostsController::class, 'categories']);
 // Route::get('/category/{category:slug}', [PostsController::class, 'category']);
@@ -44,4 +44,5 @@ Route::get('/dashboard', function(){
         ]);
 })->middleware('auth');
 
-Route::resource('/dashboard/mypost', DashboardPostController::class)->middleware('auth'); 
+Route::get('/dashboard/posts/checkSlug', [DashboardPostsController::class, 'checkSlug'])->middleware('auth');
+Route::resource('/dashboard/mypost', DashboardPostsController::class)->middleware('auth'); 

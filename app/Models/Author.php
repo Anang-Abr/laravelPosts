@@ -13,4 +13,8 @@ class Author extends Model
     {
         return $this->hasMany(Posts::class);
     }
+    // public function Users()
+    // {
+    //     return $this->hasOne(Users::class, 'user_id');
+    // }
 }
