@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posts;
-use App\Models\Author;
 use App\Models\Category;
 
 class PostsController extends Controller
@@ -34,14 +33,14 @@ class PostsController extends Controller
         ]);
     }
 
-    public function author(Author $author)
-    {
-        return view('blogs', [
-            'header' => 'Posts By: '.$author->name,
-            'title' => 'Author',
-            'posts' => $author->posts->load(['category', 'author'])
-        ]);
-    }
+    // public function author(Author $author)
+    // {
+    //     return view('blogs', [
+    //         'header' => 'Posts By: '.$author->name,
+    //         'title' => 'Author',
+    //         'posts' => $author->posts->load(['category', 'author'])
+    //     ]);
+    // }
 
     public function categories()
     {

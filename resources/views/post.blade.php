@@ -8,7 +8,7 @@
         <img src="{{ url('img/'. $post->category->slug . '.jpg') }}" class="card-img-top rounded"  alt="...">
         <h2>{{ $post->title }}</h2>
         <small>{{ $post->category->name }}</small>
-        <p>Author: <a href= "{{ url('blogs?author=' .$post->author->slug) }}"> {{ $post->author->name }}</a></p>
+        <p>Author: <a href= "{{ url('blogs?author=' .$post->user->slug) }}"> {{ $post->user->username }}</a></p>
         <p>category: <a href= "{{ url('blogs?category='.$post->category->slug) }}">{{ $post->category->name }}</a></p>
         <p>{!! $post->body !!}</p>
     </div>

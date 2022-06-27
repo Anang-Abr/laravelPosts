@@ -10,7 +10,7 @@ class Posts extends Model
 {
     use HasFactory, Sluggable;
     protected $guarded = ['id'];
-    protected $with = ['category', 'author'];
+    protected $with = ['category', 'user'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -27,7 +27,7 @@ class Posts extends Model
             });
         });
          $query->when($filters['author'] ?? false, function ($query, $author){
-            return $query->whereHas('author',fn($query) => //penggunaan arrow function membuat variabel $author dapat diakses secara langsung
+            return $query->whereHas('user',fn($query) => //penggunaan arrow function membuat variabel $author dapat diakses secara langsung
                 $query->where('slug', 'like', '%' . $author . '%')
             );
         });
@@ -38,9 +38,9 @@ class Posts extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function Author()
+    public function User()
     {
-        return $this->belongsTo(Author::class);
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     public function getRouteKeyName()

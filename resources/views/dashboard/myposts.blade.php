@@ -2,6 +2,13 @@
 
 @section('content')
 <table class="table table-striped">
+  @if(session()->has('success'))
+  <div class="col-12">
+    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+    <strong>{{ session('success') }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  @endif
     <a href="/dashboard/mypost/create" class='btn btn-primary mt-4'>Add New Post</a>
   <thead>
     <tr>
@@ -21,8 +28,12 @@
       {{-- <td>{{ $post->author->name }}</td> --}}
       <td>
         <a href="/dashboard/mypost/{{ $post->slug }}" class="badge bg-primary"><span data-feather='eye'></span></a>
-        <a href="/dashboard/mypost/{{ $post->id }}" class="badge bg-warning"><span data-feather='edit'></span></a>
-        <a href="/dashboard/mypost/{{ $post->id }}" class="badge bg-danger"><span data-feather='x-circle'></span></a>
+        <a href="/dashboard/mypost/{{ $post->slug }}/edit" class="badge bg-warning"><span data-feather='edit'></span></a>
+        <form action="/dashboard/mypost/{{ $post->slug }}" method="post" class="d-inline">
+          @method('delete')
+          @csrf
+          <button class="badge bg-danger border-0 hover" onclick="return confirm('Are you sure want to delete this post?')"><a data-feather='x-circle'></a></button>
+        </form>
       </td>
     </tr>
     @endforeach

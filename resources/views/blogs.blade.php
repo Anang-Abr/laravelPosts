@@ -7,7 +7,7 @@
         @if(request('category'))
         <h1>{{ $posts[0]->category->name }}</h1>
         @elseif(request('author'))
-        <h1>{{ $posts[0]->author->name }}</h1>
+        <h1>{{ $posts[0]->user->username }}</h1>
         @else
         <h1>{{ $header }}</h1>
         @endif
@@ -32,7 +32,7 @@
     <img src="{{ url('img/'. $posts[0]->category->slug . '.jpg') }}"  class="card-img-top" alt="...">
     <div class="card-body">
         <h2>{{ $posts[0]->title }}</h2>
-        <small>in {{ $posts[0]->category->name }} by  {{ $posts[0]->author->name }}</small>
+        <small>in {{ $posts[0]->category->name }} by  {{ $posts[0]->user->username }}</small>
         <p>{!! $posts[0]->excerpt !!}</p>
         <a href="{{ url('blogs/' . $posts[0]->slug ) }}" class="btn-lg btn btn-primary float-end">Read More</a>
     </div>
@@ -42,7 +42,7 @@
     <div class="card">
         <img src="{{ url('img/'. $post->category->slug . '.jpg') }}" class="card-img-top"  alt="...">
         <h5 class="card-title">{{ $post->title }}</h2>
-        <small class="text-muted">in {{ $post->category->name }} by  {{ $post->author->name }}</small>
+        <small class="text-muted">in {{ $post->category->name }} by  {{ $post->user->username }}</small>
         <p>{!! $post->excerpt !!}</p>
         <div>
         <a href="{{ url('blogs/' . $post->slug ) }}" class="btn btn-primary float-end m-3">Read More</a>

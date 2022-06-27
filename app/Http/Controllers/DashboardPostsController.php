@@ -56,7 +56,7 @@ class DashboardPostsController extends Controller
         $validatedData['excerpt'] = Str::limit((strip_tags($validatedData['body'])), 200);
 
         Posts::create($validatedData);
-        return redirect('/dashboard/mypost');
+        return redirect('/dashboard/mypost')->with('success', "New post has been added");
     }
 
     /**
@@ -79,9 +79,13 @@ class DashboardPostsController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function edit(Posts $posts)
-    {
-        //
+    public function edit(Posts $mypost)
+    {   
+        // return $mypost;
+        return view('dashboard.edit', [
+            'categories' => Category::all(),
+            'post' => $mypost
+        ]);
     }
 
     /**
@@ -91,9 +95,35 @@ class DashboardPostsController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Posts $posts)
-    {
-        //
+    public function update(Request $request, Posts $mypost)
+    {   
+        // return $request;
+        if($request['slug'] == $mypost->slug){
+            $validatedData = $request->validate([
+                'title' => 'required|max:255',
+                'category_id' => 'required',
+                'body' => 'required'
+            ]);
+        }
+        else{
+             $validatedData = $request->validate([
+                'title' => 'required|max:255',
+                'category_id' => 'required',
+                'slug' => 'required:unique:posts',
+                'body' => 'required'
+            ]);
+        }
+
+        // $validatedData = $checkData->validate([
+
+        // ]);
+
+        $validatedData['author_id'] = auth()->user()->id;
+        $validatedData['excerpt'] = Str::limit((strip_tags($validatedData['body'])), 200);
+        $validatedData['slug'] = $request['slug'];
+        // return $validatedData;
+        Posts::where('id', $mypost->id)->update($validatedData);
+        return redirect('/dashboard/mypost')->with('success', "Post has been edited");
     }
 
     /**
@@ -102,9 +132,10 @@ class DashboardPostsController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Posts $posts)
+    public function destroy(Posts $mypost)
     {
-        //
+        Posts::destroy($mypost->id);
+        return redirect('/dashboard/mypost')->with('success', "Post has been deleted");
     }
 
     public function checkSlug(Request $request)

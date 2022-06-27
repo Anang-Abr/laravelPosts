@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Author;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -19,15 +20,14 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $name =  $this->faker->name();
+        $username = $this->faker->name();
         return [
-            'name' => $name,
-            'username' => $name,
+            'name' => $this->faker->name(),
+            'username' => $username,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // password
-            'remember_token' => Str::random(10),
-            'author_id' => $this->faker->unique()->numberBetween(1, Author::count())
+            'remember_token' => Str::random(10)
         ];
     }
 

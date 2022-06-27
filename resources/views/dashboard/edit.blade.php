@@ -1,12 +1,13 @@
 @extends('dashboard.template.main')
 
 @section('content')
-<form action="/dashboard/mypost" method="post">
+<form action="/dashboard/mypost/{{ $post->slug }}" method="post">
+    @method('put')
     @csrf
-    <h2>Create Post</h2>
+    <h2>Edit Post</h2>
 <div class="my-3">
   <label for="title" class="form-label">Post Title</label>
-  <input type="text" name='title' class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Post's Title" required autofocus value='{{ old('title') }}'>
+  <input type="text" name='title' class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Post's Title" required autofocus value='{{ old('title',$post->title) }}'>
   @error('title')
     <div class="invalid-feedback">
       {{ $message }}
@@ -15,7 +16,7 @@
 </div>
 <div class="mb-3">
   <label for="slug" class="form-label">Slug</label>
-  <input type="text" name='slug' class="form-control @error('slug') is-invalid @enderror" id="slug" placeholder="Slug" readonly value='{{ old('slug') }}'>
+  <input type="text" name='slug' class="form-control @error('slug') is-invalid @enderror" id="slug" placeholder="Slug" readonly value='{{  old('slug',$post->slug) }}'>
    @error('slug')
     <div class="invalid-feedback">
       {{ $message }}
@@ -26,7 +27,7 @@
   <label for="category" class="form-label">Slug</label>
   <select name="category_id" id="" class="form-select mb-3">
     @foreach($categories as $category)
-      @if(old('category_id') == $category->id)
+      @if( old('category_id',$post->category_id) == $category->id)
         <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
       @else
         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -41,7 +42,7 @@
 </div>
 <div class="my-3">
 <label for="body" class="form-label">Body</label>
-<input id="body" type="hidden" name="body" class='@error('body') is-invalid @enderror'>
+<input id="body" type="hidden" name="body" class='@error('body') is-invalid @enderror' value="{{  old('body',$post->body) }}">
 <trix-editor input="body"></trix-editor>
  @error('body')
     <div class="invalid-feedback">
@@ -49,7 +50,7 @@
     </div>
   @enderror
 </div>
-<button type="submit" class="btn btn-primary mb-4">Post</button>
+<button type="submit" class="btn btn-primary mb-4">Edit post</button>
 </form>
 
 <script>

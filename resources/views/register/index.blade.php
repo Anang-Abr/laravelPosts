@@ -17,8 +17,8 @@
     </div>
     <div class="form-floating">
       <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="Usename" required value='{{ old('username') }}'>
-      <label for="username">Usename</label>
-       @error('name')
+      <label for="username">Username</label>
+       @error('username')
       <div class="invalid-feedback">
         {{ $message }}
       </div>
@@ -42,8 +42,8 @@
       </div>
       @enderror
     </div>
-    <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Login</button>
-    <small>Already have an account?<a href="{{ url('login') }}">Login now</a></small>
+    <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Register</button>
+    <small>Already have an account? <a href="{{ url('login') }}">Login now</a></small>
     <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
   </form>
 </main>

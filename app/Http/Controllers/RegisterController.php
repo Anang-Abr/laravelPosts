@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+
 
 class RegisterController extends Controller
 {
@@ -26,6 +28,9 @@ class RegisterController extends Controller
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']);
+        // $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', 'My First Post');
+
+        // return $validatedData;
 
         User::create($validatedData);
 

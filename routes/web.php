@@ -23,14 +23,16 @@ Route::get('/home', [PostsController::class, 'index']);
 Route::get('/', [PostsController::class, 'index']);
 Route::get('/blogs', [PostsController::class, 'posts']);
 Route::get('/blogs/{post}', [PostsController::class, 'post']);
-// Route::get('/author/{author:slug}', [PostsController::class, 'author']); sudah tidak dipakai karena penampilan post bedasarkan author di handle dengan metode searching
 Route::get('/category', [PostsController::class, 'categories']);
-// Route::get('/category/{category:slug}', [PostsController::class, 'category']);
 Route::get('/about', function () {
     return view('about', [
         'title' => 'About'
     ]);
 });
+
+// Route::get('/author/{author:slug}', [PostsController::class, 'author']); sudah tidak dipakai karena penampilan post bedasarkan author di handle dengan metode searching
+// Route::get('/category/{category:slug}', [PostsController::class, 'category']);
+
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
