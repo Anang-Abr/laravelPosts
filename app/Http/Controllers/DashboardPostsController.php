@@ -6,6 +6,7 @@ use App\Models\Posts;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Str;
 
@@ -49,12 +50,17 @@ class DashboardPostsController extends Controller
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts', 
             'category_id' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'image|file'
         ]);
+
+        if($request->file('image')){
+            $validatedData['image'] = $request->file('image')->store('post-img');
+        }
 
         $validatedData['author_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit((strip_tags($validatedData['body'])), 200);
-
+        // return $validatedData;
         Posts::create($validatedData);
         return redirect('/dashboard/mypost')->with('success', "New post has been added");
     }
@@ -97,31 +103,33 @@ class DashboardPostsController extends Controller
      */
     public function update(Request $request, Posts $mypost)
     {   
-        // return $request;
-        if($request['slug'] == $mypost->slug){
-            $validatedData = $request->validate([
+        $rules = [
                 'title' => 'required|max:255',
                 'category_id' => 'required',
                 'body' => 'required'
-            ]);
-        }
-        else{
-             $validatedData = $request->validate([
-                'title' => 'required|max:255',
-                'category_id' => 'required',
-                'slug' => 'required:unique:posts',
-                'body' => 'required'
-            ]);
+        ];
+
+        if($request['slug'] != $mypost['slug']){
+            $rules['slug'] = 'required|unique:posts';
         }
 
-        // $validatedData = $checkData->validate([
+        if($request['image']){
+            $rules['image'] = 'image|file|min:1024';
+        }
 
-        // ]);
+        // validasi data
+        $validatedData = $request->validate($rules);
+
+        if($request->file('image')){
+            if($mypost->image){
+                Storage::delete($mypost->image);
+            }
+            $validatedData['image'] = $request->file('image')->store('post-img');
+        }
 
         $validatedData['author_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit((strip_tags($validatedData['body'])), 200);
         $validatedData['slug'] = $request['slug'];
-        // return $validatedData;
         Posts::where('id', $mypost->id)->update($validatedData);
         return redirect('/dashboard/mypost')->with('success', "Post has been edited");
     }
@@ -134,6 +142,9 @@ class DashboardPostsController extends Controller
      */
     public function destroy(Posts $mypost)
     {
+        if($mypost->image){
+            Storage::delete($mypost->image);
+        }
         Posts::destroy($mypost->id);
         return redirect('/dashboard/mypost')->with('success', "Post has been deleted");
     }

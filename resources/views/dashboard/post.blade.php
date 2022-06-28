@@ -11,7 +11,11 @@
           <button class="btn btn-danger border-0 hover" onclick="return confirm('Are you sure want to delete this post?')"><a data-feather='x-circle'></a> Delete</button>
     </div>
     <div class="my-2 p-3 col-8">
+        @if($post->image)
+        <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top rounded"  alt="...">
+        @else
         <img src="{{ url('img/'. $post->category->slug . '.jpg') }}" class="card-img-top rounded"  alt="...">
+        @endif
         <h2>{{ $post->title }}</h2>
         <small>{{ $post->category->name }}</small>
         <p>category: <a href= "{{ url('blogs?category='.$post->category->slug) }}">{{ $post->category->name }}</a></p>

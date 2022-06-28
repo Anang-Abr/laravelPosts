@@ -5,7 +5,12 @@
         <a class="btn btn-primary fluid" href="/blogs" role="button">back</a>
     </div>
     <div class="my-2 p-3 col-8">
+       @if($post->image)
+        <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top rounded"  alt="...">
+        {{-- yang disini tadi ^ --}}
+        @else
         <img src="{{ url('img/'. $post->category->slug . '.jpg') }}" class="card-img-top rounded"  alt="...">
+        @endif
         <h2>{{ $post->title }}</h2>
         <small>{{ $post->category->name }}</small>
         <p>Author: <a href= "{{ url('blogs?author=' .$post->user->slug) }}"> {{ $post->user->username }}</a></p>

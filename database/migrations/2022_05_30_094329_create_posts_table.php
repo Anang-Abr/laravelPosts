@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('body');
             $table->foreignId('category_id');
             $table->foreignId('author_id');
+            $table->string('image')->nullable();
             $table->text('excerpt');
             $table->timestamps();
         });
