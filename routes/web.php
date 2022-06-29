@@ -5,6 +5,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardPostsController;
+use App\Http\Controllers\AdminCategories;
 
 
 
@@ -47,4 +48,8 @@ Route::get('/dashboard', function(){
 })->middleware('auth');
 
 Route::get('/dashboard/posts/checkSlug', [DashboardPostsController::class, 'checkSlug'])->middleware('auth');
-Route::resource('/dashboard/mypost', DashboardPostsController::class)->middleware('auth');
+Route::resource('/dashboard/mypost', DashboardPostsController::class)->middleware('auth'); 
+
+
+Route::resource('/dashboard/category', AdminCategories::class)->except('show')->middleware('auth'); 
+Route::get('/dashboard/category/checkSlug', [AdminCategories::class, 'checkSlug'])->middleware('auth');

@@ -14,5 +14,15 @@
             </a>
           </li>
         </ul>
+        @can('admin')
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('dashboard/category*')? 'active' : '' }}" aria-current="page" href="{{ url('/dashboard/category') }}">
+              <span data-feather="grid" class="align-text-bottom "></span>
+              Category
+            </a>
+          </li>
+        </ul>
+        @endcan
       </div>
     </nav>
