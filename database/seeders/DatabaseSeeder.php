@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         //     'category_id' => '2'
         // ]);
         \App\Models\User::factory()->create([
-            'name' => 'Anang',
+            'name' => 'testuser',
             'username' => 'test-username',
             'email' => 'test@example.com',
             'password' => Hash::make('password')

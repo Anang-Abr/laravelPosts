@@ -57,5 +57,11 @@ class PostsController extends Controller
             'posts' => $category->posts->load(['category', 'author'])
         ]);
     }
+
+    public function ajax(Request $request)
+    {  
+        $res = Posts::find($request->id);
+        return response()->json($res);
+    }
     
 }

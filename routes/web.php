@@ -31,6 +31,9 @@ Route::get('/about', function () {
     ]);
 });
 
+// ajax
+Route::get('/ajax', [PostsController::class, 'ajax'])->middleware('auth');
+
 // Route::get('/author/{author:slug}', [PostsController::class, 'author']); sudah tidak dipakai karena penampilan post bedasarkan author di handle dengan metode searching
 // Route::get('/category/{category:slug}', [PostsController::class, 'category']);
 

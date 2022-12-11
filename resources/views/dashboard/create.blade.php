@@ -29,7 +29,7 @@
 
 {{-- //category_id --}}
 <div class="my-3">
-  <label for="category" class="form-label">Slug</label>
+  <label for="category" class="form-label">Category</label>
   <select name="category_id" id="" class="form-select mb-3">
     @foreach($categories as $category)
       @if(old('category_id') == $category->id)
